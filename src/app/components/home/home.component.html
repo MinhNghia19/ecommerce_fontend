@@ -1,0 +1,207 @@
+<app-header></app-header>
+<div class="container mx-auto min-h-screen max-w-screen-xl">
+  <!-- list-categories -->
+  <div class="list-categories z-20 relative">
+    <!-- <ul class="flex justify-center"> -->
+    <ul class="flex justify-center">
+      @for (category of categories; track category.name) {
+      <li
+        class="px-2 py-2 border group"
+        (click)="onSubcategoryClick(category.id)"
+      >
+        <div
+          class="cursor-pointer hover:underline hover:text-blue-600"
+          (mouseover)="getSubcategories(category.id)"
+        >
+          {{ category.name }}
+        </div>
+        <div
+          class="subcategory w-max left-32 bg-slate-300 border mt-2 hidden group-hover:block absolute shadow-md p-2 rounded-lg"
+        >
+          <div class="flex">
+            <div class="w-64">
+              <p class="font-bold text-ms mb-6 pb-4 border-b border-black">
+                Most popular categories
+              </p>
+              <ul>
+                @for (subcategory of subcategories; track subcategory.name) {
+                <li class="cursor-pointer hover:text-blue-600">
+                  {{ subcategory.name }}
+                </li>
+                }
+              </ul>
+            </div>
+            <a href="" class="">
+              <img
+                class="thumnail mx-3 my-3 rounded-md"
+                src="ROW-19392_Fallback_Electronics_770x270.png"
+                alt=""
+              />
+            </a>
+          </div>
+        </div>
+      </li>
+
+      }
+    </ul>
+  </div>
+  <!-- baner -->
+  <!--  2-->
+  <div class="banner relative w-full overflow-hidden">
+    <div class="w-full">
+      <ul
+        class="flex transition-transform duration-1000 ease-in-out"
+        [style.transform]="'translateX(-' + currentSlide * 100 + '%)'"
+      >
+        @for ( image of images; track image; ) {
+        <li class="w-full flex-shrink-0">
+          <a href="#" class="block w-full">
+            <img
+              class="object-cover h-80 w-full rounded-md"
+              [src]="image"
+              alt="Banner Image"
+            />
+          </a>
+        </li>
+        }
+      </ul>
+
+      <button
+        (click)="prevSlide()"
+        class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10 transition-transform duration-500 ease-in-out"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        (click)="nextSlide()"
+        class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10 transition-transform duration-500 ease-in-out"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!--  -->
+  <div class="trending mt-5">
+    <h2 class="text-2xl font-bold">Trending on</h2>
+    <div class="list-trending flex justify-between mt-3">
+      <a href="#" class="text-center group">
+        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
+          <img
+            src="../../../assets/images/smartphone.jpg"
+            alt="Smartphone"
+            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
+
+        <span
+          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
+          >Smartphones</span
+        >
+        <span
+          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
+        ></span>
+      </a>
+
+      <a href="#" class="text-center group">
+        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
+          <img
+            src="../../../assets/images/headphone.jpg"
+            alt="Smartphone"
+            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
+
+        <span
+          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
+          >Headphones</span
+        >
+        <span
+          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
+        ></span>
+      </a>
+
+      <a href="#" class="text-center group">
+        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
+          <img
+            src="../../../assets/images/Audio.jpg"
+            alt="Smartphone"
+            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
+
+        <span
+          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
+          >Audio</span
+        >
+        <span
+          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
+        ></span>
+      </a>
+
+      <a href="#" class="text-center group">
+        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
+          <img
+            src="../../../assets/images/gamingconsoles.jpg"
+            alt="Smartphone"
+            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
+
+        <span
+          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
+          >Gaming & Console</span
+        >
+        <span
+          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
+        ></span>
+      </a>
+
+      <a href="#" class="text-center group">
+        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
+          <img
+            src="../../../assets/images/ricecooker.jpg"
+            alt="Smartphone"
+            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
+
+        <span
+          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
+          >Rice Cooker</span
+        >
+        <span
+          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
+        ></span>
+      </a>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
