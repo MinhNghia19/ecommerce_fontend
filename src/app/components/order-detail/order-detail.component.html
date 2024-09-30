@@ -1,0 +1,114 @@
+<app-header></app-header>
+<div class="container mx-auto p-6 bg max-w-screen-md ">
+  <!-- Back to Home -->
+  <!-- <div class="mb-6 mt-5">
+    <a href="/" class="text-blue-600 hover:underline">Quay về trang chủ</a>
+  </div> -->
+  <h2 class="text-xl font-semibold mb-4 ">Đơn Hàng</h2>
+  <div class="flex flex-col items-center ">
+  <!-- Order Status Filter -->
+    <div >
+      <ul class="flex gap-1 mb-4 text-sm mr-4 ">
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'all'" (click)="setStatus('all')">Tất cả</li>
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'pending'" (click)="setStatus('pending')">Chờ xử lý</li>
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'confirmed'" (click)="setStatus('confirmed')">Đã xác nhận</li>
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'delivering'" (click)="setStatus('delivering')">Đang giao hàng</li>
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'canceled'" (click)="setStatus('canceled')">Đã hủy</li>
+        <li class="cursor-pointer border border-gray-300 px-3 py-1 " [class.text-blue-600]="selectedStatus === 'completed'" (click)="setStatus('completed')">Thành công</li>
+      </ul>
+
+    </div>
+    <div *ngFor="let order of filteredOrders" class="w-3/4 mb-4 border border-gray-300 p-3 rounded-lg shadow-2xl bg-blue-200">
+      <p>Đơn hàng: #{{ order.id }}</p>
+      <div class="mb-4">
+        <h4 class="text-lg font-semibold mb-2">Thông tin sản phẩm</h4>
+        <div *ngFor="let product of order.details" class="mb-4 border-b pb-4">
+          <div class="flex">
+            <img [src]="product.product_thumbnail" alt="{{ product.product_name }}" class="w-24 h-24 object-cover ml-2 mr-2">
+            <div>
+              <p class="font-medium">{{ product.product_name }}</p>
+              <div *ngIf="product.attributes">
+                <div class="flex items-center space-x-4">
+                  <ul class="flex flex-wrap space-x-4">
+                    <li *ngFor="let entry of getAttributeEntries(product.attributes)" class="inline-flex">
+                      <span class="font-semibold">{{ entry.key }}:</span>
+                      <span class="ml-1">{{ entry.value }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p class="font-medium">Số lượng: {{ product.quantity }}</p>
+            </div>
+          </div>
+          <div class="flex">
+            <span>Giá:</span>
+            <p class="text-blue-600 ml-2">{{ product.price | currency: 'VND':'symbol':'1.0-0' }}</p>
+          </div>
+        </div>
+      </div>
+    
+      <p>Trạng thái: {{ order.status }}</p>
+     
+      <p class="font-semibold">Tổng tiền: <span class=" font-bold text-blue-600">{{ order.total_money | currency: 'VND':'symbol':'1.0-0' }}</span></p>
+    
+      <div class="cursor-pointer text-blue-600 hover:underline" (click)="toggleOrderDetails(order.id)">
+        > Xem chi tiết
+      </div>
+    
+      <div *ngIf="selectedOrderId === order.id" class="border-2 border-gray-500 p-6 bg-slate-200 font-sans">
+        <h3 class="text-lg font-semibold mb-4">Chi tiết đơn hàng #{{ order.id }}</h3>
+        <p class="text-sm text-gray-600">Trạng thái: <span class="font-semibold text-blue-600">{{ order.status }}</span></p>
+        <p class="text-sm text-gray-600">Đặt lúc: {{ order.order_date[2] }}/{{ order.order_date[1] }}/{{ order.order_date[0] }}</p>
+    
+        <!-- Shipping Information -->
+        <div class="mb-4 border-b-2 border-white">
+          <h4 class="text-lg font-semibold mb-2">Thông tin nhận hàng</h4>
+          <p>Người nhận: {{ order.fullname }} - {{ order.phone_number }}</p>
+          <p>Nhận tại: {{ order.address }}</p>
+        </div>
+    
+        <!-- Payment Information -->
+        <div class="mb-4 border-b-2 border-white">
+          <h4 class="text-lg font-semibold mb-2">Hình thức thanh toán</h4>
+          <p>{{ order.payment_method ?? 'Chưa có' }}</p>
+        </div>
+    
+        <!-- Product Information -->
+        <div class="mb-4">
+          <h4 class="text-lg font-semibold mb-2">Thông tin sản phẩm</h4>
+          <div *ngFor="let product of order.details" class="mb-4 border-b-2 border-white pb-4">
+            <div class="flex">
+              <img [src]="product.product_thumbnail" alt="{{ product.product_name }}" class="w-24 h-24 object-cover ml-2 mr-2">
+              <div>
+                <p class="font-medium">{{ product.product_name }}</p>
+                <div *ngIf="product.attributes">
+                  <div class="flex items-center space-x-4">
+                    <ul class="flex flex-wrap space-x-4">
+                      <li *ngFor="let entry of getAttributeEntries(product.attributes)" class="inline-flex">
+                        <span class="font-semibold">{{ entry.key }}:</span>
+                        <span class="ml-1">{{ entry.value }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="font-medium">Số lượng: {{ product.quantity }}</p>
+              </div>
+            </div>
+            <div class="flex">
+              <span>Giá:</span>
+              <p class="text-blue-600 ml-2">{{ product.price | currency: 'VND':'symbol':'1.0-0' }}</p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Price Summary -->
+        <div>
+        
+          <p class="text-right font-semibold">Tổng tiền: <span class="text-lg font-bold text-blue-600">{{ order.total_money | currency }}</span></p>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>

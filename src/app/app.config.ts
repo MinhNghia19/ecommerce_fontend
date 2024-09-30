@@ -10,9 +10,13 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+
+
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     
@@ -34,5 +38,10 @@ export const appConfig: ApplicationConfig = {
      provideRouter(routes),
      importProvidersFrom(RouterModule.forRoot(routes)),
       provideClientHydration(),
-      provideHttpClient(withFetch())]
+      provideHttpClient(withFetch()),
+      provideToastr(),
+      provideAnimations()
+    
+    ],
+    
 };

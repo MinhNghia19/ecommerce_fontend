@@ -1,0 +1,102 @@
+<div class="container mx-auto p-6 max-w-screen-xl">
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="space-y-4 mt-10 max-w-md mx-auto bg-red-200 p-6 shadow-2xl rounded-lg">
+    <h3 class="text-xl font-semibold mb-4 text-center">Provide your contact info</h3>
+
+    <!-- Name Field -->
+    <div>
+      <label for="name" class="block text-gray-700 font-medium mb-2">Tên:</label>
+      <input 
+        id="fullName" 
+        formControlName="fullName" 
+        type="text" 
+        class="w-full px-2 py-2 h-8 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+        placeholder="Enter new your name"
+      />
+    </div>
+
+    <!-- Address Fields in Two Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="province" class="block text-gray-700 font-medium mb-2">Tỉnh/Thành phố:</label>
+        <select 
+          id="province" 
+          formControlName="province" 
+          (change)="onProvinceChange($event)" 
+          class="w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option value="" disabled>Select a province</option>
+          <option *ngFor="let province of provinces" [value]="province.id">
+            {{ province.full_name }}
+          </option>
+        </select>
+        <div *ngIf="province?.invalid && (province?.dirty || province?.touched)" class="text-red-500 text-sm mt-1">
+          <div *ngIf="province?.errors?.['required']">Province is required.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="district" class="block text-gray-700 font-medium mb-2">Quận/Huyện:</label>
+        <select 
+          id="district" 
+          formControlName="district" 
+          (change)="onDistrictChange($event)" 
+          class="w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option value="" disabled>Select a district</option>
+          <option *ngFor="let district of districts" [value]="district.id">
+            {{ district.full_name }}
+          </option>
+        </select>
+        <div *ngIf="district?.invalid && (district?.dirty || district?.touched)" class="text-red-500 text-sm mt-1">
+          <div *ngIf="district?.errors?.['required']">District is required.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="ward" class="block text-gray-700 font-medium mb-2">Phường/Xã:</label>
+        <select 
+          id="ward" 
+          formControlName="ward" 
+          class="w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option value="" disabled>Select a ward</option>
+          <option *ngFor="let ward of wards" [value]="ward.id">
+            {{ ward.full_name }}
+          </option>
+        </select>
+        <div *ngIf="ward?.invalid && (ward?.dirty || ward?.touched)" class="text-red-500 text-sm mt-1">
+          <div *ngIf="ward?.errors?.['required']">Ward is required.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Number Field -->
+    <div>
+      <label for="phoneNumber" class="block text-gray-700 font-medium mb-2">Số điện thoại:</label>
+      <input 
+        id="phoneNumber" 
+        formControlName="phoneNumber" 
+        type="text" 
+        class="w-full  px-2 py-2 h-8 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+        placeholder="Enter your phone number"
+      />
+      <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="text-red-500 text-sm mt-1">
+        <div *ngIf="phoneNumber?.errors?.['required']">Phone number is required.</div>
+        <div *ngIf="phoneNumber?.errors?.['pattern']">Invalid phone number format. It should be 10 digits.</div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button 
+      type="submit" 
+      [disabled]="accountForm.invalid" 
+      [ngClass]="{
+        'bg-gray-400': accountForm.invalid, 
+        'bg-indigo-600': !accountForm.invalid
+      }"
+      class="w-full text-white py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Cập nhật
+    </button>
+  </form>
+</div>

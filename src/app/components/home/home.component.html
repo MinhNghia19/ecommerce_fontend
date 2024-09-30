@@ -2,43 +2,18 @@
 <div class="container mx-auto min-h-screen max-w-screen-xl">
   <!-- list-categories -->
   <div class="list-categories z-20 relative">
-    <!-- <ul class="flex justify-center"> -->
-    <ul class="flex justify-center">
+
+    <ul class="flex flex-wrap justify-center font-sans">
       @for (category of categories; track category.name) {
       <li
-        class="px-2 py-2 border group"
-        (click)="onSubcategoryClick(category.id)"
+        class="px-2 py-2 border border-gray-500 group flex-shrink-0"
+        (click)="onCategoryClick(category)"
       >
         <div
           class="cursor-pointer hover:underline hover:text-blue-600"
           (mouseover)="getSubcategories(category.id)"
         >
           {{ category.name }}
-        </div>
-        <div
-          class="subcategory w-max left-32 bg-slate-300 border mt-2 hidden group-hover:block absolute shadow-md p-2 rounded-lg"
-        >
-          <div class="flex">
-            <div class="w-64">
-              <p class="font-bold text-ms mb-6 pb-4 border-b border-black">
-                Most popular categories
-              </p>
-              <ul>
-                @for (subcategory of subcategories; track subcategory.name) {
-                <li class="cursor-pointer hover:text-blue-600">
-                  {{ subcategory.name }}
-                </li>
-                }
-              </ul>
-            </div>
-            <a href="" class="">
-              <img
-                class="thumnail mx-3 my-3 rounded-md"
-                src="ROW-19392_Fallback_Electronics_770x270.png"
-                alt=""
-              />
-            </a>
-          </div>
         </div>
       </li>
 
@@ -108,100 +83,9 @@
     </div>
   </div>
 
-  <!--  -->
-  <div class="trending mt-5">
-    <h2 class="text-2xl font-bold">Trending on</h2>
-    <div class="list-trending flex justify-between mt-3">
-      <a href="#" class="text-center group">
-        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
-          <img
-            src="../../../assets/images/smartphone.jpg"
-            alt="Smartphone"
-            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
 
-        <span
-          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
-          >Smartphones</span
-        >
-        <span
-          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
-        ></span>
-      </a>
-
-      <a href="#" class="text-center group">
-        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
-          <img
-            src="../../../assets/images/headphone.jpg"
-            alt="Smartphone"
-            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-
-        <span
-          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
-          >Headphones</span
-        >
-        <span
-          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
-        ></span>
-      </a>
-
-      <a href="#" class="text-center group">
-        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
-          <img
-            src="../../../assets/images/Audio.jpg"
-            alt="Smartphone"
-            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-
-        <span
-          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
-          >Audio</span
-        >
-        <span
-          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
-        ></span>
-      </a>
-
-      <a href="#" class="text-center group">
-        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
-          <img
-            src="../../../assets/images/gamingconsoles.jpg"
-            alt="Smartphone"
-            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-
-        <span
-          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
-          >Gaming & Console</span
-        >
-        <span
-          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
-        ></span>
-      </a>
-
-      <a href="#" class="text-center group">
-        <div class="cover-thumb overflow-hidden rounded-full w-40 h-40">
-          <img
-            src="../../../assets/images/ricecooker.jpg"
-            alt="Smartphone"
-            class="rounded-full w-40 h-40 object-cover mb-2 mx-auto transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-
-        <span
-          class="inline-block font-bold transition-all duration-300 group-hover:opacity-100"
-          >Rice Cooker</span
-        >
-        <span
-          class="block w-full h-0.5 bg-blue-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"
-        ></span>
-      </a>
-    </div>
+  <div class=" mt-5">
+    <h2 class="text-2xl font-bold">Your Recently Viewed Items</h2>
   </div>
 </div>
 <app-footer></app-footer>

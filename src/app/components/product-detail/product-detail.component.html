@@ -1,0 +1,372 @@
+<app-header></app-header>
+
+<div class="container mx-auto max-w-screen-xl px-4 py-6">
+  <!--  -->
+  <div class="flex flex-col md:flex-row">
+   
+
+    <!-- <div class="md:w-1/2 mb-6 md:mb-0 flex flex-col md:flex-row">
+      <div class="flex flex-col space-y-2 mt-4 md:mt-0 md:w-24 md:ml-4">
+        <div
+          *ngFor="let image of product?.product_images; let i = index"
+          class="thumbnail-item flex-shrink-0 w-full h-20 cursor-pointer border-2"
+          [ngClass]="{'border-red-500': i === currentImageIndex, 'border-blue-500': i !== currentImageIndex}"
+          (click)="thumbnailClick(i)"
+        >
+          <img
+            [src]="image.image_url"
+            class="object-cover w-full h-full"
+            alt="Thumbnail Image"
+          />
+        </div>
+      </div>
+      <div class="relative flex-1 overflow-hidden">
+        <div id="carouselExample" class="relative w-full h-full">
+          <div class="carousel-inner relative w-full h-full">
+            <div
+              *ngFor="let image of product?.product_images; let i = index"
+              class="carousel-item absolute w-full h-full transition-opacity duration-500"
+              [ngClass]="{'opacity-100': i === currentImageIndex, 'opacity-0': i !== currentImageIndex}"
+            >
+              <img
+                [src]="image.image_url"
+                class="object-cover w-full h-full"
+                alt="Product Image"
+              />
+            </div>
+          </div>
+        
+          <button
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10"
+            (click)="previousImage()"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <button
+            class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10"
+            (click)="nextImage()"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="w-full md:w-1/2 mb-6 md:mb-0 flex flex-col md:flex-row">
+      <!-- Thumbnail images -->
+      <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible space-x-2 md:space-x-0 md:space-y-2 mt-4 md:mt-0 md:w-24 md:ml-4">
+        <div
+          *ngFor="let image of product?.product_images; let i = index"
+          class="thumbnail-item flex-shrink-0 w-20 md:w-full h-20 cursor-pointer border-2"
+          [ngClass]="{'border-red-500': i === currentImageIndex, 'border-blue-500': i !== currentImageIndex}"
+          (click)="thumbnailClick(i)"
+        >
+          <img
+            [src]="image.image_url"
+            class="object-cover w-full h-full"
+            alt="Thumbnail Image"
+          />
+        </div>
+      </div>
+    
+      <!-- Main Image Carousel -->
+      <div class="relative flex-1 overflow-hidden mt-4 md:mt-0">
+        <div id="carouselExample" class="relative w-full h-full">
+          <div class="carousel-inner relative w-full h-full">
+            <div
+              *ngFor="let image of product?.product_images; let i = index"
+              class="carousel-item absolute w-full h-full transition-opacity duration-500"
+              [ngClass]="{'opacity-100': i === currentImageIndex, 'opacity-0': i !== currentImageIndex}"
+            >
+              <img
+                [src]="image.image_url"
+                class="object-cover w-full h-full"
+                alt="Product Image"
+              />
+            </div>
+          </div>
+    
+          <!-- Previous Button -->
+          <button
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10"
+            (click)="previousImage()"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+    
+          <!-- Next Button -->
+          <button
+            class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-10"
+            (click)="nextImage()"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    
+
+
+    <div class="md:w-1/2">
+      <div class="product-details px-4 md:px-8">
+        <!-- Tên sản phẩm -->
+        <h2 class="text-2xl font-semibold mb-2">{{ product?.name }}</h2>
+        
+        <!-- Mô tả sản phẩm -->
+        <p class="text-gray-700 mb-2">{{ product?.description }}</p>
+        
+        <!-- Giá sản phẩm -->
+        <p class="text-lg text-red-600 mb-4">{{ formattedPrice }}</p>
+      <div class="product-attributes">
+        @for(entry of attributeEntries;track entry){
+        <div  class="mb-4">
+            <p class="text-base mb-2 font-semibold">{{ entry.key }}:</p>
+            <div class="flex flex-wrap gap-2">
+              @for(value of entry.values;track value) {
+                <ng-container >
+                    <span
+                        class="inline-flex items-center px-3 py-1 border cursor-pointer"
+                        [ngClass]="{
+                            ' text-blue-500 border-blue-500': selectedAttributes[entry.key] === value,
+                            ' text-gray-800 border-gray-300': selectedAttributes[entry.key] !== value
+                        }"
+                        (click)="onSelectAttribute(entry.key, value)"
+                    >
+                        {{ value }}
+                    </span>
+                </ng-container>
+              }
+            </div>
+        </div>
+      }
+    </div>
+        <div class="flex items-center space-x-4 mb-4">
+          <p class="text-base">Quantity:</p>
+          <div class="product-quantity flex items-center">
+            <div class="border rounded flex items-center">
+              <button class="px-4 py-2 border-r" type="button" (click)="decreaseQuantity()">-</button>
+              <input
+                type="text"
+                [(ngModel)]="quantity"
+                class="text-center w-12 border-0 outline-none"
+                readonly
+              />
+              <button class="px-4 py-2 border-l" type="button" (click)="increaseQuantity()">+</button>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500">{{ product?.stockQuantity }} pieces available</p>
+        </div>
+
+        <!-- Các hành động -->
+        <div class="product-actions mt-4 flex space-x-2">
+          <button
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            type="button"
+            (click)="addToCart()"
+          >
+            Thêm vào giỏ hàng
+          </button>
+          <button
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            type="button"
+            (click)="buyNow()"
+          >
+            Mua ngay
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  <!--  -->
+  <div class="desc">
+    <div class="text-white mt-5 mb-5 w-full bg-slate-400 p-4 rounded-lg">Product Description
+    
+    </div>
+    <img src="../../../assets/images/Desc1.jfif" alt="desc">
+    <img src="../../../assets/images/Desc2.jfif" alt="desc">
+    <img src="../../../assets/images/Desc3.jfif" alt="desc">
+  </div>
+
+
+  <!--  -->
+
+  <div class="text-gray-700 mt-5 mb-5">FROM THE SAME SHOP</div>
+  <ul
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+  >
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <!-- Repeat product items as needed -->
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+    <li
+      class="border p-4 rounded-lg shadow-lg transition transform hover:-translate-y-1"
+    >
+      <a href="">
+        <img
+          src="../../../assets/images/Audio.jpg"
+          alt="Product Image 1"
+          class="w-full h-48 object-cover mb-4 rounded"
+        />
+        <h2 class="text-lg font-bold mb-2">Product Name 1</h2>
+        <p class="text-gray-700 mb-2">
+          Short description of the product goes here.
+        </p>
+        <p class="text-gray-900 font-semibold">$100.00</p>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<app-footer></app-footer>

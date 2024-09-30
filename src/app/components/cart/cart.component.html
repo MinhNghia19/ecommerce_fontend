@@ -1,0 +1,133 @@
+<app-header></app-header>
+
+<!-- <div class="container mx-auto p-6 bg-white max-w-screen-md ">
+  <h2 class="text-lg font-semibold mb-3">Giỏ hàng của bạn</h2>
+   
+    <div class="mb-6  border border-gray-300 p-3 rounded-lg shadow-2xl ">
+      <div class="flex justify-between items-center border-b pb-4 mb-4">
+        <div class="flex items-center">
+          <div>
+
+            
+            <h3 class="text-lg font-semibold">Điện thoại iPhone 15 Pro Max 256GB</h3>
+            <p class="text-sm text-gray-600">Màu: Titan tự nhiên</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="text-red-600 hover:text-red-800 focus:outline-none mb-2">Xóa</button>
+          <p class="text-lg font-bold text-blue-600">29.490.000₫</p>
+          <p class="text-sm text-gray-600">Online giá rẻ quá (<a href="#" class="text-blue-600 hover:underline">Xem chi tiết</a>)</p>
+          <p class="text-sm text-gray-600">Số lượng: 1</p>
+        </div>
+      </div>
+      <div class="flex justify-between items-center border-b pb-4 mb-4">
+        <div class="flex items-center">
+          <div>
+            <h3 class="text-lg font-semibold">Điện thoại iPhone 15 Pro Max 256GB</h3>
+            <p class="text-sm text-gray-600">Màu: Titan tự nhiên</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="text-red-600 hover:text-red-800 focus:outline-none mb-2">Xóa</button>
+          <p class="text-lg font-bold text-blue-600">29.490.000₫</p>
+          <p class="text-sm text-gray-600">Online giá rẻ quá (<a href="#" class="text-blue-600 hover:underline">Xem chi tiết</a>)</p>
+          <p class="text-sm text-gray-600">Số lượng: 1</p>
+        </div>
+      </div>
+      <p class="text-right font-semibold">Tạm tính: <span class="text-lg font-bold text-blue-600">29.490.000₫</span></p>
+      <button class="w-full bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 focus:outline-none"
+      (click)="onCartClick()">
+        Mua hàng
+      </button>
+    </div>
+</div> -->
+<div class="container mx-auto p-6 max-w-screen-xl"> 
+@if(cartItems.length!=0) {
+ 
+    <div class="col-md-7">
+      <h2 class="text-xl font-semibold mb-4">Sản phẩm đã đặt hàng</h2>
+      <table class="table-auto w-full border-collapse border border-gray-200">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="py-2 px-4 border-b">Sản Phẩm</th>
+            <th class="py-2 px-4 border-b">Đơn Giá</th>
+            <th class="py-2 px-4 border-b">Số Lượng</th>
+            <th class="py-2 px-4 border-b">Số Tiền</th>
+            <th class="py-2 px-4 border-b">Thao Tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of cartItems; let i = index">
+            <tr>
+              <td class="py-4 px-2 border-b">
+                <div class="flex items-center space-x-4">
+                  <img
+                    [src]="item.product.thumbnail"
+                    alt="Hình ảnh sản phẩm"
+                    class="w-16 h-16 object-cover"
+                  />
+                  <span class="text-lg font-medium">{{ item.product.name }}</span>
+              
+                  <div *ngFor="let attrKey of getAttributeKeys(item.attributes)">
+                    <p>{{ attrKey }}: {{ item.attributes[attrKey] }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-2 border-b text-center">
+  
+                {{ formatPrice( item.product.price) }}
+              
+              </td>
+              <td class="py-4 px-2 border-b ">
+                <div class="flex items-center space-x-2 justify-center">
+                  <button 
+                    (click)="decreaseQuantity(i)" 
+                    class="bg-gray-200 text-gray-800 px-2 py-1 rounded hover:bg-gray-300">
+                    -
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button 
+                    (click)="increaseQuantity(i)" 
+                    class="bg-gray-200 text-gray-800 px-2 py-1 rounded hover:bg-gray-300">
+                    +
+                  </button>
+                </div>
+              </td>
+              <td class="py-4 px-2 border-b text-center">
+                {{ formatPrice( item.product.price * item.quantity )}}
+         
+              </td>
+              <td class="py-4 px-2 border-b text-right">
+                <button 
+                  (click)="confirmDelete(i)" 
+                  class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                  Xóa
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="mt-6 text-right">
+        <h4 class="text-lg font-semibold">
+         
+          Tổng giá: {{ formatPrice( totalAmount)}}
+        </h4>
+      </div>
+      <div class="mt-6 text-right">
+        <button 
+          (click)="onCartClick()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+          Đặt hàng
+        </button>
+      </div>
+    </div>
+    
+    
+
+}
+@else {
+  <p class="mt-52 text-center  text-xl text-red-600 "
+  >Giỏ Hàng Trống!!!</p>
+}
+</div>

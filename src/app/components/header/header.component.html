@@ -1,16 +1,15 @@
-<header class="bg-white border-b border-gray-300">
-  <div class="container mx-auto max-w-screen-xl">
+<header class="bg-red-200 ">
+  <div class="container mx-auto max-w-screen-xl  ">
+    <!-- Heaer top -->
     <div
-      class="header-top flex items-center justify-between py-4 border-b border-gray-300"
+      class="header-top flex items-center justify-between py-4 border-b border-black"
     >
       <nav class="hidden lg:flex lg:items-center lg:space-x-6">
-        <!-- <a href="#" class="text-gray-800 hover:text-gray-600">Home</a>
-        <a href="#" class="text-gray-800 hover:text-gray-600">Products</a> -->
         <a href="#" class="hover:underline hover:text-blue-600">Deals</a>
         <a href="#" class="hover:underline hover:text-blue-600"
           >Help & Contact</a
         >
-        <a href="#" class="p-2 border-2 hover:bg-blue-200">
+        <a href="#" class=" p-2  bg-white hover:bg-blue-400">
           <svg
             width="100%"
             height="24px"
@@ -27,8 +26,7 @@
             />
           </svg>
         </a>
-
-        <a href="#" class="p-2 border-2 hover:bg-blue-200">
+        <a (click)="onCartClick()" class="cart p-2 bg-white hover:bg-blue-400">
           <svg
             width="100%"
             height="24px"
@@ -48,34 +46,105 @@
               d="M578.418,825.641c59.961,0,108.743-48.783,108.743-108.744s-48.782-108.742-108.743-108.742H168.717 c-59.961,0-108.744,48.781-108.744,108.742s48.782,108.744,108.744,108.744c59.962,0,108.743-48.783,108.743-108.744 c0-14.4-2.821-28.152-7.927-40.742h208.069c-5.107,12.59-7.928,26.342-7.928,40.742 C469.675,776.858,518.457,825.641,578.418,825.641z M209.46,716.897c0,22.467-18.277,40.744-40.743,40.744 c-22.466,0-40.744-18.277-40.744-40.744c0-22.465,18.277-40.742,40.744-40.742C191.183,676.155,209.46,694.432,209.46,716.897z M619.162,716.897c0,22.467-18.277,40.744-40.743,40.744s-40.743-18.277-40.743-40.744c0-22.465,18.277-40.742,40.743-40.742 S619.162,694.432,619.162,716.897z"
             />
           </svg>
+          <span *ngIf="itemCount > 0" class="absolute w-5 bg-red-500 text-white text-center  text-xs rounded-full">
+            {{ itemCount }}
+          </span>
         </a>
       </nav>
-      <div class="flex space-x-4">
-        <div class="hover:underline hover:text-blue-500" (click)="onSingin()">
-          Sign in
-        </div>
 
-        <div class="hover:underline hover:text-blue-500">Register</div>
+      <!-- Mobile menu button -->
+      <div class="lg:hidden flex items-center space-x-4">
+        <button
+          class="text-gray-600 hover:text-blue-600 focus:outline-none"
+          (click)="toggleMobileMenu()"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
       </div>
+
+      <!-- Mobile menu dropdown -->
+      <div
+        class="lg:hidden absolute top-full right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"
+        [ngClass]="{ 'opacity-100': mobileMenuOpen }"
+      >
+      </div>
+
+      <!-- sign in sign up -->
+      <div class="flex relative group items-center space-x-4">
+        <ng-container *ngIf="userResponse; else signInOptions">
+          <div class="m-1 relative inline-flex group">
+            <button id="hs-dropdown-hover-event" type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+              Welcome, {{ userResponse.fullname }}
+              <svg class="group-hover:rotate-180 size-4 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+      
+            <div class="transition-opacity duration-300 opacity-0 group-hover:opacity-100 group-hover:block absolute z-10 hidden min-w-60 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-12" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-hover-event">
+              <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" 
+              (click)=" onAccountSettings()">
+                Account setting
+              </div>
+              <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+              (click)=" onOrderDetail()">
+                My Purchases
+              </div>
+              <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" 
+              (click)="onLogout()">
+                Sign out
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      
+        <ng-template #signInOptions>
+          <div class="flex space-x-4">
+            <div class="hover:underline  px-2 py-1 bg-blue-600 rounded-lg text-white  cursor-pointer" (click)="onSignin()">
+              Sign in
+            </div>
+            <div class="hover:underline px-2 py-1 bg-blue-600 rounded-lg text-white cursor-pointer " (click)="onSignup()" >
+              Sign up
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      
     </div>
-    <div class="header-group flex mt-3 mb-3">
-      <div class="logo">
-        <img
-          src="../../../assets/images/final.jpg"
-          alt="eBay Logo"
-          class="h-16 lg:h-20 mr-40 rounded-full"
-        />
+
+    <div class="header-group flex flex-col md:flex-row items-center justify-center mt-3 pb-3">
+      <!-- Logo -->
+      <div class="logo mb-4 md:mb-0 flex-shrink-0 mr-10">
+        <a href="#">
+          <img
+            src="../../../assets/images/final.jpg"
+            alt="eBay Logo"
+            class="h-16 lg:h-20 rounded-full"
+          />
+        </a>
       </div>
 
-      <div class="main-group flex items-center flex-1">
-        <div class="border-2 border-gray-700 flex-1 w-full">
+      <!-- Main group -->
+      <div
+        class="main-group flex flex-col md:flex-row items-center justify-center flex-1 w-full md:space-x-2 "
+      >
+        <div class=" flex w-full md:w-3/4 mb-2 md:mb-0 ">
           <input
             type="text"
             placeholder="Search for anything..."
-            class="w-3/4 bg-white h-10 px-5 pr-10 text-sm focus:outline-none"
+            class="w-full bg-white h-10 px-5 text-sm focus:outline-none rounded-md"
           />
-          <select
-            class="border-2 ml-auto hover:border-black rounded-sm w-1/4 bg-white h-10 px-5 text-sm focus:outline-none"
+          <!-- <select
+            class="border-2 ml-auto hover:border-black rounded-md w-full md:w-1/4 bg-white h-10 px-5 text-sm focus:outline-none"
             [(ngModel)]="selectedCategoryId"
           >
             <option [value]="0">All categories</option>
@@ -84,17 +153,56 @@
               {{ category.name }}
             </option>
             }
-            <!-- Các tùy chọn lọc khác -->
-          </select>
+          </select> -->
         </div>
         <button
-          class="bg-blue-500 ml-2 w-48 text-white px-4 py-2 hover:bg-blue-600 focus:outline-none"
+          class="bg-blue-500 w-full md:w-auto text-white px-4 py-2 hover:bg-blue-600 focus:outline-none rounded-md"
         >
           Tìm kiếm
         </button>
       </div>
     </div>
+    <!-- <div class="list-categories z-20 relative mb-2">
+   
+      <ul class="flex flex-wrap justify-center">
+        @for (category of categories; track category.name) {
+        <li
+          class="px-2 py-2 border group flex-shrink-0"
+          (click)="onCategoryClick(category)"
+        >
+          <div
+            class="cursor-pointer hover:underline hover:text-blue-600"
+          
+          >
+            {{ category.name }}
+          </div>
+        </li>
+  
+        }
+      </ul>
+    </div> -->
   </div>
 
   <!-- Dropdown menu for mobile -->
+  <div class="lg:hidden">
+    <button
+      (click)="toggleMobileMenu()"
+      class="text-gray-700 hover:text-blue-600"
+    ></button>
+
+    <div
+      *ngIf="mobileMenuOpen"
+      class="absolute top-16 left-0 w-full bg-white border border-gray-300 shadow-lg"
+    >
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >Home</a
+      >
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >Deals</a
+      >
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >Help & Contact</a
+      >
+    </div>
+  </div>
 </header>

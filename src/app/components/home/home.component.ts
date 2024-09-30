@@ -80,11 +80,11 @@ export class HomeComponent implements OnInit,AfterViewInit {
   getCategories() {
     this.categoryService.getCategories().subscribe({
       next: (categories: ApiResponse) => {
-        debugger
+      
         this.categories = categories.data;
       },
       complete: () => {
-        debugger;
+        
       },
       error: (error: any) => {
         console.error('Error fetching categories:', error);
@@ -95,11 +95,11 @@ export class HomeComponent implements OnInit,AfterViewInit {
   
     this.subcategoryService.getSubcategories(category_id).subscribe({
       next: (subcategories: ApiResponse) => {
-        debugger
+        
         this.subcategories = subcategories.data;
       },
       complete: () => {
-        debugger;
+        
       },
       error: (error: any) => {
         console.error('Error fetching categories:', error);
@@ -117,9 +117,9 @@ export class HomeComponent implements OnInit,AfterViewInit {
 
   }
 
-  onSubcategoryClick(productId: number) {
-    debugger
-    // Điều hướng đến trang detail-product với productId là tham số
-    this.router.navigate(['/subcategories/category', productId]);
+  onCategoryClick(category: Category ) {
+    this.router.navigate(['/products', `${category.name}-cat`, category.id]);
   }
+  
+  
 }
